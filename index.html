@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zouban</title>
+<style>
+body{font-family:Tahoma;background:#0f172a;color:#e2e8f0;margin:0;padding:20px;text-align:center}
+h1{color:#38bdf8}.card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:20px;margin:15px auto;max-width:700px}
+input,textarea{background:#020617;color:#fff;border:1px solid #38bdf8;width:85%;padding:12px;border-radius:8px}
+button{background:#38bdf8;color:#000;font-weight:bold;padding:12px 25px;border:none;border-radius:8px;margin:5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:8px}
+.letter{background:#020617;border:1px solid #334155;padding:8px;border-radius:8px}
+.letter b{color:#38bdf8;display:block;font-size:18px}
+.binary{font-family:monospace;color:#fbbf24;direction:ltr;word-break:break-all}
+.result{color:#4ade80;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>🔐 نظام زوبان</h1>
+<p>علي خلاف - حفظ الحضارة - 29 حرف</p>
+<div class="card">
+<h2>محول البينري</h2>
+<input id="binInput" placeholder="101010" dir="ltr">
+<button onclick="convertBin()">حوّل</button>
+<div id="binResult" class="result"></div>
+</div>
+<div class="card">
+<h2>الـ 29 حرف</h2>
+<div class="grid" id="lettersGrid"></div>
+</div>
+<div class="card">
+<h2>مشفر زوبان</h2>
+<textarea id="txtInput" rows="3"></textarea><br>
+<button onclick="encodeTxt()">شفّر</button>
+<div id="txtResult" class="binary"></div>
+</div>
+<script>
+const letters=[{ar:'ا',en:'A',bin:'00001'},{ar:'ب',en:'B',bin:'00010'},{ar:'ت',en:'C',bin:'00011'},{ar:'ث',en:'D',bin:'00100'},{ar:'ج',en:'E',bin:'00101'},{ar:'ح',en:'F',bin:'00110'},{ar:'خ',en:'G',bin:'00111'},{ar:'د',en:'H',bin:'01000'},{ar:'ذ',en:'I',bin:'01001'},{ar:'ر',en:'J',bin:'01010'},{ar:'ز',en:'K',bin:'01011'},{ar:'س',en:'L',bin:'01100'},{ar:'ش',en:'M',bin:'01101'},{ar:'ص',en:'N',bin:'01110'},{ar:'ض',en:'O',bin:'01111'},{ar:'ط',en:'P',bin:'10000'},{ar:'ظ',en:'Q',bin:'10001'},{ar:'ع',en:'R',bin:'10010'},{ar:'غ',en:'S',bin:'10011'},{ar:'ف',en:'T',bin:'10100'},{ar:'ق',en:'U',bin:'10101'},{ar:'ك',en:'V',bin:'10110'},{ar:'ل',en:'W',bin:'10111'},{ar:'م',en:'X',bin:'11000'},{ar:'ن',en:'Y',bin:'11001'},{ar:'ه',en:'Z',bin:'11010'},{ar:'و',en:'AA',bin:'11011'},{ar:'ي',en:'AB',bin:'11100'},{ar:'ء',en:'AC',bin:'11101'}];
+const grid=document.getElementById('lettersGrid');
+letters.forEach((l,i)=>{let d=document.createElement('div');d.className='letter';d.innerHTML=`<b>${l.ar}</b>${l.en}<br>${l.bin}<br>${i+1}`;grid.appendChild(d);});
+function convertBin(){let b=document.getElementById('binInput').value.trim();let dec=parseInt(b,2);document.getElementById('binResult').innerHTML=`عشري: ${dec}<br>نظام 29: ${dec.toString(29).toUpperCase()}`;}
+function encodeTxt(){let t=document.getElementById('txtInput').value;let out='';for(let ch of t){let f=letters.find(l=>l.ar===ch||l.en.toLowerCase()===ch.toLowerCase());if(f)out+=f.bin+' ';else if(ch===' ')out+='/ ';}document.getElementById('txtResult').innerText=out;}
+</script>
+</body>
+</html>
